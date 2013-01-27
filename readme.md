@@ -1,6 +1,8 @@
 URAL SPA FRAMEWORK
 ==================
 
+version 1.0.0
+
 YEP ANOTHER ONE!
 
 ![general scheme](https://raw.github.com/baio/Ural/master/readme/ural_general.jpg)
