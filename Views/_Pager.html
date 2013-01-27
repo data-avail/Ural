@@ -1,0 +1,9 @@
+<div class="pagination">
+    <ul data-bind="visible : pagesCount() > 1, css: { disabled : movingTo }">
+        <li data-bind="css: { disabled : !canMovePerv() }"><a href="#" data-bind="click: movePerv">«</a></li>
+        <!-- ko foreach: sequence -->
+        <li data-bind="css: { active : $parent.current() ===  $data, disabled : $parent.current() ===  $data }"><a href="#" data-bind="text:$data, click: $parent.moveTo"></a></li>
+        <!-- /ko -->
+        <li data-bind="css: { disabled : !canMoveNext() }"><a href="#" data-bind="click: moveNext">»</a></li>
+    </ul>
+</div>

@@ -1,0 +1,13 @@
+@model ItsApp.Models.ConfigModel
+@{
+Response.ContentType = "application/javascript";
+Response.ContentEncoding = System.Text.Encoding.UTF8;
+Response.Cache.SetCacheability(System.Web.HttpCacheability.NoCache);
+Layout = null;
+}
+
+define({
+"serviceHost" : "@Model.ServiceHost",
+"version" : "@Model.Version",
+"env" : "@Model.Env"
+});
