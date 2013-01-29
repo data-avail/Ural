@@ -3,15 +3,22 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(["Ural/Controllers/controllerBootstrap", "Ural/Models/Zones/user", "Ural/Libs/jquery.cookie"], function(controllerBootstrap, user, cookie) {
+  define(["Ural/Controllers/controllerBootstrap", "Ural/Models/Zones/user", "Ural/Libs/jquery.cookie", "Ural/Modules/pubSub"], function(controllerBootstrap, user, cookie, pubSub) {
     var ControllerAuth;
     ControllerAuth = (function(_super) {
 
       __extends(ControllerAuth, _super);
 
       function ControllerAuth(type, opts) {
+        var _this = this;
         ControllerAuth.__super__.constructor.call(this, type, opts);
         this._initialLoad = true;
+        pubSub.subOnce("auth", "logon", "controller", function() {
+          return _this.auth();
+        });
+        pubSub.subOnce("auth", "logoff", "controller", function() {
+          return _this.logOff();
+        });
       }
 
       ControllerAuth.prototype.onAction = function(data, onDone) {
@@ -82,7 +89,12 @@
 
       ControllerAuth.prototype.createUserZone = function() {
         this.viewModel.zones.user = new user.User(this);
-        return this.viewModel.zones.user.name($.cookie(".ASPXAUTH_USER"));
+        this.userZone().name.subscribe(function(val) {
+          return pubSub.pub("auth", "user_changed", {
+            name: val
+          });
+        });
+        return this.userZone().name($.cookie(".ASPXAUTH_USER"));
       };
 
       ControllerAuth.prototype.userZone = function() {

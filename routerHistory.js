@@ -71,21 +71,6 @@
 
       RouterBase.prototype.addRoute = function(route, appendExecRoute, callback) {
         return crossroads.addRoute(route, callback);
-        /*
-              if appendExecRoute
-                execRoute = "#{route}/!/{exec*}"
-                crossroads.addRoute execRoute, =>
-                  args = _u.argsToArray arguments
-                  exec = args[args.length - 1]
-                  hash = @_hash()
-                  @_hash hash, true
-                  if @_recHash != hash
-                    args.splice args.length - 1, 1, => @_exec exec
-                    callback.apply @, args
-                  else
-                    @_exec exec
-        */
-
       };
 
       RouterBase.prototype.onNotFound = function() {

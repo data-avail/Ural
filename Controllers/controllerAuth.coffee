@@ -1,9 +1,11 @@
 define ["Ural/Controllers/controllerBootstrap"
   , "Ural/Models/Zones/user"
   , "Ural/Libs/jquery.cookie"
+  , "Ural/Modules/pubSub"
 ], (controllerBootstrap
   , user
   , cookie
+  , pubSub
 ) ->
 
   class ControllerAuth extends controllerBootstrap.ControllerBootstrap
@@ -11,6 +13,12 @@ define ["Ural/Controllers/controllerBootstrap"
     constructor: (type, opts) ->
       super type, opts
       @_initialLoad = true
+
+      pubSub.subOnce "auth", "logon", "controller", =>
+        @auth()
+
+      pubSub.subOnce "auth", "logoff", "controller", =>
+        @logOff()
 
     onAction: (data, onDone) ->
       super data, ->
@@ -60,7 +68,9 @@ define ["Ural/Controllers/controllerBootstrap"
 
     createUserZone: ->
       @viewModel.zones.user = new user.User @
-      @viewModel.zones.user.name $.cookie(".ASPXAUTH_USER")
+      @userZone().name.subscribe (val) ->
+        pubSub.pub "auth", "user_changed", name : val
+      @userZone().name $.cookie(".ASPXAUTH_USER")
 
     userZone: ->
       @viewModel.zones.user

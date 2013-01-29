@@ -381,6 +381,7 @@
         this.viewModel.zones = {};
         this.onCreateStateZone(context);
         this.onCreateToolboxZone(context);
+        this.onCreateNavZone(context);
         if (context === "index") {
           this.onCreateFilterZone();
           return this.onCreatePagerZone();
@@ -393,6 +394,16 @@
 
       ControllerBase.prototype.onCreateStateZone = function() {
         return this.viewModel.zones.state = new state.State();
+      };
+
+      ControllerBase.prototype.onCreateNavZone = function() {
+        var nav;
+        nav = this.nav();
+        if (nav) {
+          return ko.applyBindings({
+            navBar: nav
+          }, $("#_nav")[0]);
+        }
       };
 
       ControllerBase.prototype.onCreatePagerZone = function() {};
@@ -444,8 +455,7 @@
         this.onViewStartsLoad();
         return this.loadView(crName, lvp, bvp, function(err) {
           if (!err) {
-            _this.root().vm = _this.viewModel;
-            ko.applyBindings(_this.root());
+            ko.applyBindings(_this.root(), $("#_layout")[0]);
           }
           _this.onViewLoaded(err);
           if (onDone) {
@@ -777,8 +787,10 @@
 
 
       ControllerBase.prototype.root = function() {
-        return __g.root;
+        return this.viewModel;
       };
+
+      ControllerBase.prototype.nav = function() {};
 
       return ControllerBase;
 

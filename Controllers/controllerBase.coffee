@@ -243,18 +243,24 @@ define ["Ural/Models/indexVM"
       @viewModel.zones = {}
       @onCreateStateZone context
       @onCreateToolboxZone context
+      @onCreateNavZone context
       if context == "index"
           @onCreateFilterZone()
           @onCreatePagerZone()
 
     onCreateToolboxZone: ->
+
     onCreateFilterZone: ->
+
     onCreateStateZone: ->
       @viewModel.zones.state = new state.State()
 
+    onCreateNavZone: ->
+      nav = @nav()
+      if nav
+        ko.applyBindings {navBar : nav}, $("#_nav")[0]
+
     onCreatePagerZone: ->
-      #@viewModel.zones.pager = new pager.Pager()
-      #if @pagerZone().maxLimit then @pagerZone().maxLimit @opts.index.maxItems
 
     toolboxZone: ->
       if @viewModel.zones then @viewModel.zones.toolbox else null
@@ -281,8 +287,7 @@ define ["Ural/Models/indexVM"
       @onViewStartsLoad()
       @loadView crName, lvp, bvp, (err) =>
         if !err
-          @root().vm = @viewModel
-          ko.applyBindings @root() #@viewModel
+          ko.applyBindings @root(), $("#_layout")[0]
         @onViewLoaded err
         if onDone then onDone err
 
@@ -476,6 +481,7 @@ define ["Ural/Models/indexVM"
 
     ###Sockets###
 
-    root: -> __g.root
+    root: -> @viewModel #__g.root
+    nav: ->
 
   ControllerBase : ControllerBase
