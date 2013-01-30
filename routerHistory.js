@@ -6,10 +6,11 @@
     var RouterBase;
     RouterBase = (function() {
 
-      function RouterBase(controllerDirectory, defaultRoute) {
+      function RouterBase(controllerDirectory, defaultRoute, defaultFile) {
         var _this = this;
         this.controllerDirectory = controllerDirectory;
         this.defaultRoute = defaultRoute;
+        this.defaultFile = defaultFile;
         this.parseHash = __bind(this.parseHash, this);
 
         this._recAction = {
@@ -134,7 +135,7 @@
         hasher.changed.add(this.parseHash);
         hasher.init();
         hash = window.location.pathname.replace(/^(\/)/, "");
-        if (!hash) {
+        if (!hash || hash === this.defaultFile) {
           hash = this.defaultRoute;
         }
         if (hash) {

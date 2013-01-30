@@ -3,7 +3,7 @@
   var __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(["Ural/Controllers/controllerBase", "Models/Zones/itemToolbox", "Models/Zones/indexToolbox", "Ural/Models/Zones/selector"], function(controllerBase, itemToolbox, indexToolbox, selector) {
+  define(["Ural/Controllers/controllerBase", "Ural/Models/Zones/selector"], function(controllerBase, itemToolbox, indexToolbox, selector) {
     var ControllerBootstrap;
     ControllerBootstrap = (function(_super) {
 
@@ -11,8 +11,6 @@
 
       function ControllerBootstrap(modelName, opts) {
         ControllerBootstrap.__super__.constructor.call(this, modelName, opts);
-        this.defaultIndexLayout = "Shared/__LayoutIndex";
-        this.defaultItemLayout = "Shared/__LayoutItem";
         this._formsStack = [];
       }
 

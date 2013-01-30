@@ -2,7 +2,7 @@ define ["Ural/Controllers/controllerBase", "Ural/Modules/pubSub", "crossroads", 
 (controllerBase, pubSub, crossroads, hasher) ->
 
   class RouterBase
-    constructor: (@controllerDirectory, @defaultRoute) ->
+    constructor: (@controllerDirectory, @defaultRoute, @defaultFile) ->
       @_recAction = name : null , obj : null, action : null
       @_recHash = null
       @addRoute '{controller}/index', true, (ctr, ck) =>
@@ -80,7 +80,7 @@ define ["Ural/Controllers/controllerBase", "Ural/Modules/pubSub", "crossroads", 
 
 
       hash = window.location.pathname.replace /^(\/)/, ""
-      hash = @defaultRoute if !hash
+      hash = @defaultRoute if !hash or hash == @defaultFile
       if hash
         @_hash hash
 

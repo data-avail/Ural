@@ -1,6 +1,4 @@
 define ["Ural/Controllers/controllerBase"
-, "Models/Zones/itemToolbox"
-, "Models/Zones/indexToolbox"
 , "Ural/Models/Zones/selector"
 ],
 (controllerBase, itemToolbox, indexToolbox, selector) ->
@@ -8,8 +6,6 @@ define ["Ural/Controllers/controllerBase"
 
     constructor: (modelName, opts)->
       super modelName, opts
-      @defaultIndexLayout = "Shared/__LayoutIndex"
-      @defaultItemLayout = "Shared/__LayoutItem"
       @_formsStack = []
 
     onShowForm: ($form, itemVM) ->
